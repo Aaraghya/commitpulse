@@ -95,7 +95,7 @@ describe('GET /api/streak', () => {
 
     const response = await GET(request);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
 
     const body = await response.text();
 
@@ -225,7 +225,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', repo: 'commitpulse' }));
 
       // 2. Assert definitions of done
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
 
       const textOutput = await response.text();
       expect(textOutput).toContain('<svg');
@@ -236,7 +236,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', org: 'vercel' }));
 
       // 2. Assert definitions of done
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
 
       const textOutput = await response.text();
       expect(textOutput).toContain('<svg');
@@ -258,7 +258,7 @@ describe('GET /api/streak', () => {
     it('returns 200 with SVG content type', async () => {
       const response = await GET(makeRequest({ user: 'octocat' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(response.headers.get('Content-Type')).toBe('image/svg+xml');
     });
 
@@ -280,7 +280,7 @@ describe('GET /api/streak', () => {
         })
       );
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(response.headers.get('Content-Type')).toBe('image/svg+xml');
 
       const body = await response.text();
@@ -313,7 +313,7 @@ describe('GET /api/streak', () => {
         })
       );
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
 
       const body = await response.text();
       expect(body).toContain('<svg');
@@ -339,7 +339,7 @@ describe('GET /api/streak', () => {
   describe('edge cases for empty/private profiles', () => {
     it('Scenario 1: Normal active GitHub user', async () => {
       const response = await GET(makeRequest({ user: 'octocat' }));
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       const body = await response.text();
       expect(body).toContain('<svg');
     });
@@ -354,7 +354,7 @@ describe('GET /api/streak', () => {
       } as unknown as ExtendedContributionData);
 
       const response = await GET(makeRequest({ user: 'private-user' }));
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       const body = await response.text();
       expect(body).toContain('<svg');
       // Should show 0 contributions and streaks
@@ -520,19 +520,19 @@ describe('GET /api/streak', () => {
     it('returns 200 when scale=log is given', async () => {
       const response = await GET(makeRequest({ user: 'octocat', scale: 'log' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     it('defaults to linear scale when an unknown scale value is given', async () => {
       const response = await GET(makeRequest({ user: 'octocat', scale: 'exponential' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     it('defaults to linear scale when scale=foo is given', async () => {
       const response = await GET(makeRequest({ user: 'octocat', scale: 'foo' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
   });
 
@@ -540,7 +540,7 @@ describe('GET /api/streak', () => {
     it('accepts a valid 4-digit year', async () => {
       const response = await GET(makeRequest({ user: 'octocat', year: '2024' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     it('passes correct from/to range when ?year=2023 is provided', async () => {
@@ -579,7 +579,7 @@ describe('GET /api/streak', () => {
     it('functions normally when the year parameter is missing', async () => {
       const response = await GET(makeRequest({ user: 'octocat' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     it('returns 400 for invalid year format', async () => {
@@ -592,7 +592,7 @@ describe('GET /api/streak', () => {
 
     // it('returns 200 for unknown ?date= parameter (not part of schema)', async () => {
     //   const response = await GET(makeRequest({ user: 'octocat', date: '2026-15-40' }));
-    //   expect(response.status).toBe(200);
+    //   expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     // });
 
     it('returns 400 for malformed numeric year', async () => {
@@ -632,14 +632,14 @@ describe('GET /api/streak', () => {
     it('accepts year=2008 (the earliest valid year)', async () => {
       const response = await GET(makeRequest({ user: 'octocat', year: '2008' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     it('accepts the current year', async () => {
       const currentYear = new Date().getFullYear().toString();
       const response = await GET(makeRequest({ user: 'octocat', year: currentYear }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     describe('date parameter', () => {
@@ -679,14 +679,14 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', radius: '-5' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('rx="0"');
     });
 
     it('handles non-numeric radius gracefully', async () => {
       const response = await GET(makeRequest({ user: 'octocat', radius: 'abc' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
   });
 
@@ -694,7 +694,7 @@ describe('GET /api/streak', () => {
     it('returns 200 for a valid known theme like "neon"', async () => {
       const response = await GET(makeRequest({ user: 'octocat', theme: 'neon' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     it('returns SVG content type for theme=neon', async () => {
@@ -719,7 +719,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', theme: 'auto' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('prefers-color-scheme: dark');
       expect(body).toContain('--cp-bg');
     });
@@ -728,7 +728,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', theme: 'does-not-exist' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('58a6ff');
     });
   });
@@ -900,7 +900,7 @@ describe('GET /api/streak', () => {
     it('returns 200 with a valid IANA timezone', async () => {
       const response = await GET(makeRequest({ user: 'octocat', tz: 'America/New_York' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
     });
 
     it('uses getSecondsUntilMidnightInTimezone (not UTC) for the cache TTL when ?tz= is set', async () => {
@@ -923,7 +923,7 @@ describe('GET /api/streak', () => {
     it('returns 200 with valid SVG and calls getSecondsUntilMidnightInTimezone for Australia/Sydney', async () => {
       const response = await GET(makeRequest({ user: 'octocat', tz: 'Australia/Sydney' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
 
       const body = await response.text();
       expect(body).toContain('<svg');
@@ -961,11 +961,42 @@ describe('GET /api/streak', () => {
     it('returns 200 when view=monthly is given', async () => {
       const response = await GET(makeRequest({ user: 'octocat', view: 'monthly' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       const body = await response.text();
       expect(body).toContain('COMMITS THIS MONTH');
+    })
     });
+    
+    
+    describe('compare view parameter', () => {
+  it('returns 200 when view=compare and compare_year are provided', async () => {
+    const response = await GET(
+      makeRequest({
+        user: 'octocat',
+        year: '2023',
+        compare_year: '2024',
+        view: 'compare',
+      })
+    );
 
+    expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
+
+    const body = await response.text();
+
+    expect(body).toContain('<svg');
+  });
+
+  it('falls back when compare_year is missing', async () => {
+    const response = await GET(
+      makeRequest({
+        user: 'octocat',
+        view: 'compare',
+      })
+    );
+
+    expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
+  });
+});
     it('uses the selected year when generating archived monthly stats', async () => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date('2026-05-20T12:00:00Z'));
@@ -986,7 +1017,7 @@ describe('GET /api/streak', () => {
           makeRequest({ user: 'octocat', view: 'monthly', year: '2024', delta_format: 'both' })
         );
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
         expect(fetchGitHubContributions).toHaveBeenCalledWith('octocat', {
           bypassCache: false,
           from: '2024-01-01T00:00:00Z',
@@ -1009,7 +1040,7 @@ describe('GET /api/streak', () => {
       );
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('width="400"');
       expect(body).toContain('height="200"');
       expect(body).toContain('viewBox="0 0 400 200"');
@@ -1018,7 +1049,7 @@ describe('GET /api/streak', () => {
     it('defaults to default view when an unknown view is given', async () => {
       const response = await GET(makeRequest({ user: 'octocat', view: 'invalid' }));
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       const body = await response.text();
       expect(body).toContain('CURRENT_STREAK');
     });
@@ -1027,7 +1058,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', view: 'streak' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('CURRENT_STREAK');
     });
 
@@ -1188,7 +1219,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('Space Grotesk');
     });
 
@@ -1196,7 +1227,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: '' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('Space Grotesk');
     });
 
@@ -1204,7 +1235,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: '   ' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('Space Grotesk');
       expect(body).not.toContain('family=+&display=swap');
     });
@@ -1213,7 +1244,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'jetbrains' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('JetBrains Mono');
     });
 
@@ -1221,7 +1252,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'Inter' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('family=Inter');
       expect(body).toContain('"Inter", sans-serif');
     });
@@ -1230,7 +1261,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'Open Sans' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('family=Open+Sans');
     });
 
@@ -1238,7 +1269,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: '!!!' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('Space Grotesk');
       expect(body).not.toContain('family=&display=swap');
     });
@@ -1247,7 +1278,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'Inter"' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('Inter');
       expect(body).not.toContain("font: 'Inter\"'");
       expect(body).not.toContain('font-family: Inter"');
@@ -1257,7 +1288,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'Inter; @import evil' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).not.toContain('@import evil');
       expect(body).not.toContain('family=Inter%3B');
     });
@@ -1266,7 +1297,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'https://evil.com' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).not.toContain('https://evil.com');
       expect(body).not.toContain('evil.com');
     });
@@ -1277,7 +1308,7 @@ describe('GET /api/streak', () => {
       );
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).not.toContain('<script>');
       expect(body).not.toContain('alert(1)');
     });
@@ -1286,7 +1317,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'fira' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('Fira Code');
       expect(body).not.toContain('family=fira&display=swap');
     });
@@ -1295,7 +1326,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', font: 'a'.repeat(200) }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('<svg');
       expect(body).toContain('</svg>');
     });
@@ -1304,7 +1335,7 @@ describe('GET /api/streak', () => {
       const response = await GET(makeRequest({ user: 'octocat', theme: 'auto', font: 'Inter' }));
       const body = await response.text();
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(200);  const body = await response.text(); expect(body).toContain('<svg');
       expect(body).toContain('family=Inter&amp;display=swap');
       expect(body).toContain('"Inter", sans-serif');
     });
