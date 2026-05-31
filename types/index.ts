@@ -118,6 +118,28 @@ export interface MonthlyStats {
 }
 
 /**
+ * Year-over-year comparison statistics used by the comparison view.
+ */
+export interface ComparisonStats {
+  /** First year being compared. */
+  leftYear: string;
+
+  /** Second year being compared. */
+  rightYear: string;
+
+  /** Total contributions in the first year. */
+  leftTotal: number;
+
+  /** Total contributions in the second year. */
+  rightTotal: number;
+
+  /**
+   * Percentage growth from leftYear to rightYear.
+   * Null when leftYear has zero contributions.
+   */
+  growthPercentage: number | null;
+}
+/**
  * Parameters accepted by the /api/streak endpoint.
  * All fields except `user` are optional; URL parameters override theme defaults.
  */
@@ -171,9 +193,18 @@ export interface BadgeParams {
 
   /** Language/locale code for stat labels (e.g. 'en', 'fr', 'ja'). Defaults to 'en'. */
   lang?: string;
+  /** Secondary year used by comparison view. */
+compareYear?: string;
 
-  /** Badge layout variant. 'default' shows the isometric monolith; 'monthly' shows month-over-month stats; 'heatmap' shows a flat 2D contribution heatmap; 'pulse' shows a heartbeat sparkline. */
-  view?: 'default' | 'monthly' | 'heatmap' | 'pulse';
+  /**
+ * Badge layout variant.
+ * 'default' shows the isometric monolith.
+ * 'monthly' shows month-over-month stats.
+ * 'compare' shows year-over-year contribution comparison.
+ * 'heatmap' shows a flat 2D contribution heatmap.
+ * 'pulse' shows a heartbeat sparkline.
+ */
+  view?: 'default' | 'monthly' | 'compare' | 'heatmap' | 'pulse';
 
   /** Format for the monthly delta indicator. 'percent' shows %, 'absolute' shows raw count, 'both' shows both. */
   delta_format?: 'percent' | 'absolute' | 'both';
