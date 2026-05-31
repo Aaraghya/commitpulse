@@ -765,7 +765,22 @@ describe('streakParamsSchema — view fallback behavior', () => {
   it('accepts "monthly" as a valid view value', () => {
     expect(parse({ view: 'monthly' }).view).toBe('monthly');
   });
+it('accepts "compare" as a valid view value', () => {
+  expect(parse({ view: 'compare' }).view).toBe('compare');
+});
 
+it('accepts a valid compare_year value', () => {
+  const result = streakParamsSchema.safeParse({
+    user: 'octocat',
+    compare_year: '2024',
+  });
+
+  expect(result.success).toBe(true);
+
+  if (result.success) {
+    expect(result.data.compare_year).toBe('2024');
+  }
+});
   it('falls back to "default" for unknown view value', () => {
     expect(parse({ view: 'radar' }).view).toBe('default');
   });
