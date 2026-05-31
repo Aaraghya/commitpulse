@@ -168,7 +168,8 @@ export async function GET(request: Request) {
     };
 
     let calendar;
-    let versusCalendar;
+let versusCalendar;
+let compareCalendar;
 
     // Fetch Organization Mega-City Data OR Single User Data
     if (org) {
@@ -185,6 +186,15 @@ export async function GET(request: Request) {
         to,
       });
       calendar = userData.calendar;
+      if (view === 'compare' && compare_year) {
+  const compareData = await fetchGitHubContributions(user, {
+    bypassCache: refresh,
+    from: `${compare_year}-01-01T00:00:00Z`,
+    to: `${compare_year}-12-31T23:59:59Z`,
+  });
+
+  compareCalendar = compareData.calendar;
+}
 
       if (versus) {
         const versusData = await fetchGitHubContributions(versus, {
@@ -212,6 +222,23 @@ export async function GET(request: Request) {
       // even though the sparkline generator will extract its own daily 30-day timeline below.
       const stats = calculateStreak(calendar, timezone, undefined, grace);
       svg = generatePulseSVG(stats, params, calendar);
+
+      } else if (view === 'compare' && compare_year && compareCalendar) {
+  const stats1 = calculateStreak(calendar, timezone, undefined, grace);
+  const stats2 = calculateStreak(compareCalendar, timezone, undefined, grace);
+const compareParams: BadgeParams = {
+  ...params,
+  user: year || 'Year 1',
+  versus: compare_year,
+};
+
+  svg = generateVersusSVG(
+    stats1,
+    stats2,
+    compareParams,
+    calendar,
+    compareCalendar
+  );
     } else if (versus && versusCalendar) {
       const stats1 = calculateStreak(calendar, timezone, undefined, grace);
       const stats2 = calculateStreak(versusCalendar, timezone, undefined, grace);
