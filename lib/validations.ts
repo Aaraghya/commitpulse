@@ -149,6 +149,21 @@ const baseStreakParamsSchema = z.object({
         message: 'GitHub was founded in 2008. Please provide a year of 2008 or later.',
       }
     ),
+
+  compare_year: z
+  .string()
+  .optional()
+  .refine(
+    (val) => {
+      if (!val) return true;
+      const yearNum = parseInt(val, 10);
+      const currentYear = new Date().getFullYear();
+      return /^\d{4}$/.test(val) && yearNum >= 2008 && yearNum <= currentYear;
+    },
+    {
+      message: 'GitHub was founded in 2008. Please provide a year of 2008 or later.',
+    }
+  ),
   from: z
     .string()
     .optional()
@@ -199,10 +214,14 @@ const baseStreakParamsSchema = z.object({
   hide_background: z.string().optional().transform(toBooleanFlag),
   hide_stats: z.string().optional().transform(toBooleanFlag),
   lang: z.enum(supportedLanguages).catch('en').default('en'),
-  // Unknown view values fall back to the default dashboard view.
-  view: z.enum(['default', 'monthly', 'heatmap', 'pulse']).catch('default').default('default'),
-  // Invalid delta formats fall back to percentage mode.
-  delta_format: z.enum(['percent', 'absolute', 'both']).catch('percent').default('percent'),
+  /// Unknown view values fall back to the default dashboard view.
+view: z
+  .enum(['default', 'monthly', 'compare', 'heatmap', 'pulse'])
+  .catch('default')
+  .default('default'),
+
+// Invalid delta formats fall back to percentage mode.
+delta_format: z.enum(['percent', 'absolute', 'both']).catch('percent').default('percent'),
   width: dimensionParam('width', 100, 1200),
   height: dimensionParam('height', 80, 800),
   grace: z.string().optional().transform(toGraceValue).default(1),
